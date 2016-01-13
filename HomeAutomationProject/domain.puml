@@ -1,0 +1,62 @@
+@startuml
+
+title domain diagram
+
+package domain <<Frame >> {
+
+  'An electrical device tha is controlled by home automation system.
+  class Device {
+    -schedules: Schedule[0..*]
+  }
+
+  'A collection of timed events.
+  class Schedule {
+    -title: String
+    -device: Device
+    -enabled: boolean = false
+    -startDate: Date
+    -endDate: Date
+    'Duration is the number of days betwen startDate and endDate inclusive.
+    ' / denotes that duration is derived
+    -/duration: int
+    -events: TimedEvent[1..*]
+
+    'Methods
+    +addTimedEvent(event: TimedEvent): void
+    +getTimedEvent(index: int): TimedEvent
+    +changeDates(startDate: Date, duration: int): void
+    +changeDates(startDate: Date, endDate: Date): void
+    +removeEvent(index: int): TimedEvent
+
+  }
+
+  'Something that happens at a point in time.
+  class TimedEvent
+
+  'An electrical sensor device
+  class Sensor
+
+  'An event triggered by sensor
+  class TriggeredEvent
+
+  'A collection of triggered events
+  class TriggerList
+
+
+  'Class Relationships
+  ' - means association
+  ' "1..*" means multiplicity
+  ' < or > after cmment of the association adds directed triangle
+  TimedEvent "1..*" <-l Schedule :   belongs to >
+  Sensor --r TriggeredEvent : triggers >
+  TriggeredEvent --r TriggerList : belongs to >
+  TriggerList ----u Device : applies to >
+  Device "-device 1" <--l> "\n0..* -schedules" Schedule : \<  applies to
+
+
+
+
+
+}
+
+@enduml

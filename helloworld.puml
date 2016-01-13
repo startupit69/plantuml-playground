@@ -1,0 +1,11 @@
+@startuml
+
+hide footbox
+autonumber
+Alice -> Bob: Hi!
+Bob --> Alice: Hi, Alice!
+Alice -> Bob: How are you?
+Bob --> Alice: Fine, and you?
+
+
+@enduml
